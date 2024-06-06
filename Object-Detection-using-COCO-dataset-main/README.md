@@ -1,4 +1,4 @@
-# Object-Detection-using-COCO-dataset
+# Object Detection using COCO dataset
 
 purpose: learning opencv<br>
 
