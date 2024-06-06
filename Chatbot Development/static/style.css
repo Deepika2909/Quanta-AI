@@ -1,0 +1,94 @@
+body {
+    font-family: 'Garamond', serif;
+    background: url('{{ url_for('static', filename='background.jpg')}}') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    margin: 20px 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 20px;
+}
+
+#chatbox {
+    width: 100%;
+    max-width: 600px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.input-group {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    display: flex;
+}
+
+.input-group-append {
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #009688;
+    font-size: 18px;
+    padding: 10px;
+    flex: 1;
+}
+
+.btn-warning {
+    color: white;
+    background-color: #f08f00;
+    border-color: #c27400;
+    font-size: 18px;
+    padding: 10px 20px;
+}
+
+.userMessage, .botMessage {
+    display: flex;
+    margin: 10px 0;
+}
+
+.userMessage {
+    justify-content: flex-end;
+}
+
+.userText, .botText {
+    font-family: 'Monospace', serif;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+.userText span {
+    background-color: #009688;
+    color: white;
+}
+
+.botText span {
+    background-color: #ef5350;
+    color: white;
+}

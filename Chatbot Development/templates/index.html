@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        body {
+                font-family: 'Garamond', serif;
+                background: url('/static/background.jpg') no-repeat center center fixed;
+                background-size: cover;
+                margin: 0;
+                padding: 0;
+                height: 100vh;
+                overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white;
+}       
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 40px;
+            margin: 20px 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 0 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        #chatbox {
+            width: 100%;
+            max-width: 600px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .input-group {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            display: flex;
+        }
+
+        .input-group-append {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control {
+            border: none;
+            border-radius: 0;
+            border-bottom: 2px solid #009688;
+            font-size: 18px;
+            padding: 10px;
+            flex: 1;
+        }
+
+        .btn-warning {
+            color: white;
+            background-color: #f08f00;
+            border-color: #c27400;
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        .userMessage, .botMessage {
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .userMessage {
+            justify-content: flex-end;
+        }
+
+        .userText, .botText {
+            font-family: 'Monospace', serif;
+            font-size: 16px;
+            line-height: 24px;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+
+        .userText span {
+            background-color: #009688;
+            color: white;
+        }
+
+        .botText span {
+            background-color: #ef5350;
+            color: white;
+        }
+
+        .btn {
+            border: none;
+            background-color: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .btn:hover {
+            background-color: #e68900;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🤖 Welcome to AI ChatBot 🌟</h1>
+        
+        <form>
+            <div id="chatbox">
+                <div class="botMessage">
+                    <p class="botText"><span>Hi! I'm Your bot.</span></p>
+                </div>
+            </div>
+            <div id="userInput" class="input-group">
+                <input id="text" type="text" name="msg" placeholder="Message" class="form-control">
+                <div class="input-group-append">
+                    <button type="submit" id="send" class="btn">Send</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $("form").on("submit", function(event) {
+                event.preventDefault();
+                var rawText = $("#text").val();
+                if (rawText.trim() !== "") {
+                    var userHtml = '<div class="userMessage"><p class="userText"><span>' + rawText + "</span></p></div>";
+                    $("#text").val("");
+                    $("#chatbox").append(userHtml);
+                    $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+                    $.ajax({
+                        data: {
+                            msg: rawText,
+                        },
+                        type: "POST",
+                        url: "/get",
+                    }).done(function(data) {
+                        var botHtml = '<div class="botMessage"><p class="botText"><span>' + data + "</span></p></div>";
+                        $("#chatbox").append(botHtml);
+                        $("#chatbox").scrollTop($("#chatbox")[0].scrollHeight);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
